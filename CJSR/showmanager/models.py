@@ -20,4 +20,5 @@ class Show(models.Model):
     email = models.EmailField(max_length=254)
     twitter = models.CharField(max_length=15)
     facebook = models.URLField()
-    
+    def __unicode__(self):
+        return self.name    
