@@ -1,5 +1,5 @@
 from django.contrib import admin
-from showmanager.models import Show, Hosts, Contact
+from showmanager.models import Show, Host
 from django.contrib.admin import SimpleListFilter
 class DayListFilter(SimpleListFilter):
     title = ('Day')
@@ -9,23 +9,17 @@ class TimeListFilter(SimpleListFilter):
     title = ('TimeSlot')
     parameter_name = 'starttime'
 
-class HostsInline(admin.StackedInline):
-#    inlines = [ContactInline]
-# Cannot stack menus inline, need to find work around (seperate hosts 
-# interaction perhaps
-    model = Hosts
-    extra = 1
-    
-class ContactInline(admin.StackedInline):
-    model = Contact
+class HostInline(admin.StackedInline):
+    model = Host
     extra = 1
 
 class ShowAdmin(admin.ModelAdmin):
     fieldsets = [
-        ('Basics', {'fields': ['name', 'day', 'starttime', 'tagline', 'description',]}),
+        ('Basics', {'fields': ['name', 'day', 'starttime', 'tagline', 'description',]}), 
+        ('Contact Info', {'fields': ['website', 'email', 'twitter', 'facebook']}),
     ]
-    inlines = [HostsInline]
+    inlines = [HostInline]
     list_display = ('name', 'day', 'starttime')
 #   list_filter = (DayListFilter, TimeListFilter)
-    search_fields = ['name', 'hosts',] 
+    search_fields = ['name', 'host',] 
 admin.site.register(Show, ShowAdmin)
