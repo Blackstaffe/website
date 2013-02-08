@@ -13,12 +13,8 @@ class Show(models.Model):
         ('Friday', 'Friday'), 
         ('Saturday','Saturday')])
     starttime = models.TimeField()
-    # This is a tad weird in tha admin pannel because it doesn't seem to 
-    # show up but it seems to enter into the database fine, could have to do
-    # with the IntegerField, will look into, could also be stored as a 
-    # CharField but that would require converting it back to an integer after.
-    # better to figure out, and I need to check if it is being inserted into
-    # database. 
+    startdate = models.DateField()
+    biweekly = models.BooleanField()
     length = models.IntegerField(choices=[
         (30, 'Half-hour'),
         (60, 'Hour'),
