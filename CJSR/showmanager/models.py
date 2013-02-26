@@ -3,7 +3,8 @@ from django.db import models
 # Show database model
 class Show(models.Model):
     # Basic Info 
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=25)
+    slug = models.SlugField(unique=True, max_length=25)
     day = models.CharField(max_length=10, choices=[
         ('Sunday', 'Sunday'),
         ('Monday', 'Monday'),
@@ -40,7 +41,6 @@ class Show(models.Model):
     facebook = models.URLField(blank=True, null=True)
     def __unicode__(self):
         return self.name    
-
 class Host(models.Model):
     show = models.ForeignKey(Show)
     host = models.CharField(max_length=200)
