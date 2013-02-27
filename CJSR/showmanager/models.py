@@ -13,7 +13,7 @@ class Show(models.Model):
         ('Thursday', 'Thursday'), 
         ('Friday', 'Friday'), 
         ('Saturday','Saturday')])
-    starttime = models.TimeField()
+    timeslot = models.TimeField()
     startdate = models.DateField()
     biweekly = models.BooleanField()
     length = models.IntegerField(choices=[

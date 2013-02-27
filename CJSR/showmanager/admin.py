@@ -15,12 +15,12 @@ class HostInline(admin.StackedInline):
     extra = 1
 class ShowAdmin(admin.ModelAdmin):
     fieldsets = [
-        ('Basics', {'fields': ['name', 'day', 'starttime', 'startdate', 
-                    'biweekly', 'length', 'genre', 'description', 'inactive']}),
+        ('Basics', {'fields': ['name', 'day', 'startdate', 'biweekly', 'timeslot', 'length', 
+                     'genre', 'description', 'inactive']}),
         ('Contact Info', {'fields': ['website', 'email', 'twitter', 'facebook']}),
     ]
     inlines = [HostInline]
-    list_display = ('name', 'day', 'starttime')
-    list_filter = ['starttime', 'day']
+    list_display = ('name', 'day', 'timeslot')
+    list_filter = ['timeslot', 'day']
     search_fields = ['name', 'host',] 
 admin.site.register(Show, ShowAdmin)
