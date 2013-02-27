@@ -15,6 +15,8 @@ class Show(models.Model):
         ('Saturday','Saturday')])
     timeslot = models.TimeField()
     startdate = models.DateField()
+    # All the date functions should be merged and some functions written
+    # to do the admin stuff
     biweekly = models.BooleanField()
     length = models.IntegerField(choices=[
         (30, 'Half-hour'),
@@ -40,9 +42,9 @@ class Show(models.Model):
     twitter = models.CharField(max_length=15, blank=True, null=True)
     facebook = models.URLField(blank=True, null=True)
     def __unicode__(self):
-        return self.name    
+        return unicode(self.name)    
 class Host(models.Model):
     show = models.ForeignKey(Show)
     host = models.CharField(max_length=200)
     def __unicode__(self):
-        return self.host
+        return unicode(self.host)
