@@ -15,7 +15,7 @@ class HostInline(admin.StackedInline):
     extra = 1
 class ShowAdmin(admin.ModelAdmin):
     fieldsets = [
-        ('Basics', {'fields': ['name', 'day', 'startdate', 'biweekly', 'timeslot', 'length', 
+        ('Basics', {'fields': ['name', 'slug', 'day', 'startdate', 'biweekly', 'timeslot', 'length', 
                      'genre', 'description', 'inactive']}),
         ('Contact Info', {'fields': ['website', 'email', 'twitter', 'facebook']}),
     ]

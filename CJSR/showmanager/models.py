@@ -4,7 +4,7 @@ from django.db import models
 class Show(models.Model):
     # Basic Info 
     name = models.CharField(max_length=25)
-    slug = models.SlugField(unique=True, max_length=25)
+    slug = models.SlugField( max_length=25)
     day = models.CharField(max_length=10, choices=[
         ('Sunday', 'Sunday'),
         ('Monday', 'Monday'),

@@ -128,9 +128,9 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     # Showdb manager
-    'showmanager'
+    'showmanager',
     # Log Machine
-    #'logmachine'
+    'archive',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
