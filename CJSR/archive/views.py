@@ -11,6 +11,14 @@ def index(request):
     # add ability to find by time
     return HttpResponse("Some things would go here")
 
+def genre(request):
+    genrelist = Show.objects.order_by('genre')
+    template = loader.get_template('archive/genre.html')
+    context = Context({
+        'genrelist': genrelist,
+    })
+    return HttpResponse(template.render(context))
+
 def show_detail(request, show_id):
     show_info = Show.objects.get(pk=show_id)
     template = loader.get_template('archive/show_detail.html')
