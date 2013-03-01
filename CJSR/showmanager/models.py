@@ -27,6 +27,7 @@ class Show(models.Model):
         (180, 'Three hours')])
     description = models.TextField(max_length=2000)
     inactive = models.BooleanField()
+    genre = models.ForeignKey('showmanager.Genre')
     # Contact Info 
     website = models.URLField(blank=True, null=True)
     email = models.EmailField(max_length=254, blank=True, null=True)
@@ -37,19 +38,13 @@ class Show(models.Model):
 class Host(models.Model):
     show = models.ForeignKey(Show)
     host = models.CharField(max_length=200)
+    slug = models.CharField(max_length=200)
     def __unicode__(self):
         return unicode(self.host)
 
 class Genre(models.Model):
-    show = models.ForeignKey(Show)
-    genre = models.CharField(max_length=15, choices=[
-        ('Eclectic', 'Eclectic'),
-        ('Spoken Word', 'Spoken Word'),
-        ('News', 'News'),
-        ('Roots', 'Roots'),
-        ('Hip-Hop', 'Hip-Hop'),
-        ('Cultural', 'Cultural'),
-        ('Loud', 'Loud'),
-        ('Specialty', 'Specialty')])
+    genre = models.CharField(max_length=15)
+    slug = models.CharField(max_length=15)
+    color = models.CharField(max_length=20)
     def __unicode__(self):
         return unicode(self.genre)
