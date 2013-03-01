@@ -25,15 +25,6 @@ class Show(models.Model):
         (120, 'Two hours' ),
         (150, 'Two and a half hours'),
         (180, 'Three hours')])
-    genre = models.CharField(max_length=15, choices=[
-        ('Eclectic', 'Eclectic'),
-        ('Spoken Word', 'Spoken Word'),
-        ('News', 'News'),
-        ('Roots', 'Roots'),
-        ('Hip-Hop', 'Hip-Hop'),
-        ('Cultural', 'Cultural'),
-        ('Loud', 'Loud'),
-        ('Specialty', 'Specialty')])
     description = models.TextField(max_length=2000)
     inactive = models.BooleanField()
     # Contact Info 
@@ -48,3 +39,17 @@ class Host(models.Model):
     host = models.CharField(max_length=200)
     def __unicode__(self):
         return unicode(self.host)
+
+class Genre(models.Model):
+    show = models.ForeignKey(Show)
+    genre = models.CharField(max_length=15, choices=[
+        ('Eclectic', 'Eclectic'),
+        ('Spoken Word', 'Spoken Word'),
+        ('News', 'News'),
+        ('Roots', 'Roots'),
+        ('Hip-Hop', 'Hip-Hop'),
+        ('Cultural', 'Cultural'),
+        ('Loud', 'Loud'),
+        ('Specialty', 'Specialty')])
+    def __unicode__(self):
+        return unicode(self.genre)
