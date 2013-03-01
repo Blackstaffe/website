@@ -13,7 +13,14 @@ urlpatterns = patterns('',
     url(r'^genre/$', 
     views.genre, 
     name='genre'),
-#    url(r'^/hosts', include(logmachine.views.hosts)),
-#    url(r'^/hosts/name', include(logmachine.views.host)),
+#    url(r^/genre/
+     # maybe genre's should be referenced by an ID instead of a string would 
+     # make this easier
+    url(r'^hosts/$', 
+    views.hosts, 
+    name='hosts'),
+    url(r'^hosts/(?P<host_id>\d+)/$', 
+    views.host_detail, 
+    name='host_detail'),
 #    url(r'^/timeslot/', include(logmachine.views.timeslot)),
 )
