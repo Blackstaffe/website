@@ -1,9 +1,65 @@
-{% if latest_logs %}
-    <ul>
-    {% for show in latest_logs %}
-        <li><a href="{{ show.id }}/">{{ show.name }}</a></li>
-    {% endfor %}
-    </ul>
+<ul>
+<h1>Sunday</h1>
+{% if sunday %}
+{% for show in sunday %}
+<li><a href="{{ show.id }}/">{{ show.name }}</a></li>
+{% endfor %}
 {% else %}
-    <p>No Shows Found</p>
+No Shows Found
 {% endif %}
+
+<h1>Monday</h1>
+{% if monday %}
+{% for show in monday %}
+<li><a href="{{ show.id }}/">{{ show.name }}</a></li>
+{% endfor %}
+{% else %}
+No Shows Found
+{% endif %}
+
+<h1>Tuesday</h1>
+{% if tuesday %}
+{% for show in tuesday %}
+<li><a href="{{ show.id }}/">{{ show.name }}</a></li>
+{% endfor %}
+{% else %}
+No Shows Found
+{% endif %}
+
+<h1>Wednesday</h1>
+{% if wednesday %}
+{% for show in wednesday %}
+<li><a href="{{ show.id }}/">{{ show.name }}</a></li>
+{% endfor %}
+{% else %}
+No Shows Found
+{% endif %}
+
+<h1>Thursday</h1>
+{% if thursday %}
+{% for show in thursday %}
+<li><a href="{{ show.id }}/">{{ show.name }}</a></li>
+{% endfor %}
+{% else %}
+No Shows Found
+{% endif %}
+
+<h1>Friday</h1>
+{% if friday %}
+{% for show in friday %}
+<li><a href="{{ show.id }}/">{{ show.name }}</a></li>
+{% endfor %}
+{% else %}
+No Shows Found For Friday
+{% endif %}
+
+<h1>Saturday</h1>
+{% if saturday %}
+{% for show in saturday %}
+<li><a href="{{ show.id }}/">{{ show.name }}</a></li>
+{% endfor %}
+{% else %}
+No Shows Found For Saturday
+{% endif %}
+</ul>
+

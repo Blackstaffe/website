@@ -1,3 +1,4 @@
+from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import Context, loader
 
@@ -5,41 +6,43 @@ from showmanager.models import Show, Host
 # Create your views here.
 # these should be moved into seperate files for sanities sake
 def index(request):
-    # add a list of latest logs
-    # add ability to find by time
-    return HttpResponse("Some things would go here")
+    latestlogs = Show.objects.order_by('timeslot')[:12]
+    context = {'latestlogs': latestlogs}
+    return render(request, 'archive/index.html', context) 
 
+# this is uneccesary kept here for memories sake
 def genre(request):
     genrelist = Show.objects.order_by('genre')
-    template = loader.get_template('archive/genre.html')
-    context = Context({
-        'genrelist': genrelist,
-    })
-    return HttpResponse(template.render(context))
+    context = {'genrelist': genrelist}
+    return render(request, 'archive/genre.html', context)
 
 def genre_detail(request):
     genre_info = Show.objects.filter('genre')
-    template = loader.get_template('archve/genre_detail.html')
-    context = Context({
-        'showsingenre': showsingenre,
-    })
-    return HttpResponse(template.render(context))
+    context = {'showsingenre': showsingenre}
+    return render(request, 'archive/genre_detail.html', context)
 
 def show_detail(request, show_id):
-    show_info = Show.objects.get(pk=show_id)
-    template = loader.get_template('archive/show_detail.html')
-    context = Context({
-        'show_info': show_info,
-    })
-    return HttpResponse(template.render(context))
+    showinfo = Show.objects.get(pk=show_id)
+    context = {'showinfo': showinfo}
+    return render(request, 'archive/show_detail.html', context)
 
+# Change this to reference by absolute time value
 def shows(request):
-    latest_logs = Show.objects.order_by('timeslot')[:12] #this will break when the db model is updated
-    template = loader.get_template('archive/shows.html')
-    context = Context({
-        'latest_logs': latest_logs,
-    })
-    return HttpResponse(template.render(context))
+    sunday = Show.objects.filter(day__exact='Sunday')    
+    monday = Show.objects.filter(day__exact='Monday')    
+    tuesday = Show.objects.filter(day__exact='Tuesday')    
+    wednesday = Show.objects.filter(day__exact='Wednesday')    
+    thursday = Show.objects.filter(day__exact='Thursday')    
+    friday = Show.objects.filter(day__exact='Friday')    
+    saturday = Show.objects.filter(day__exact='Saturday')    
+    context = {'sunday': sunday,
+    'monday': monday,
+    'tuesday': tuesday,
+    'wednesday': wednesday,
+    'thursday': thursday,
+    'friday': friday,
+    'saturday': saturday,}
+    return render(request, 'archive/shows.html', context)
 
 def hosts(request):
     host_list = Host.objects.order_by('host')
