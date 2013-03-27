@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 from django.template import Context, loader
 
 from showmanager.models import Show, Host
@@ -43,19 +42,3 @@ def shows(request):
     'friday': friday,
     'saturday': saturday,}
     return render(request, 'archive/shows.html', context)
-
-def hosts(request):
-    host_list = Host.objects.order_by('host')
-    template = loader.get_template('archive/hosts.html')
-    context = Context({
-        'host_list': host_list,
-    })
-    return HttpResponse(template.render(context))
-
-def host_detail(request, host_id):
-    hosts = Host.objects.get(pk=host_id)
-    template = loader.get_template('archive/host_detail.html')
-    context = Context({
-        'hosts': hosts,
-    })
-    return HttpResponse(template.render(context))
