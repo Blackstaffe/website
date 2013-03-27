@@ -10,11 +10,11 @@ urlpatterns = patterns('',
     views.show_detail, 
     name='show_detail'),
     # Url scheme for genre pages
-    url(r'^genre/$', 
+    url(r'^genres/$', 
     views.genre, 
-    name='genre'),
+    name='genres'),
 #    url(r^/genre/
      # maybe genre's should be referenced by an ID instead of a string would 
-     # make this easier
+     # make this easier -   url(r'^genres/(?P<genre_id>\d+)/$', 
 #    url(r'^/timeslot/', include(logmachine.views.timeslot)),
 )

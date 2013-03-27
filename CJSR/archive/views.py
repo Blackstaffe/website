@@ -13,12 +13,7 @@ def index(request):
 def genre(request):
     genrelist = Show.objects.order_by('genre')
     context = {'genrelist': genrelist}
-    return render(request, 'archive/genre.html', context)
-
-def genre_detail(request):
-    genre_info = Show.objects.filter('genre')
-    context = {'showsingenre': showsingenre}
-    return render(request, 'archive/genre_detail.html', context)
+    return render(request, 'archive/genres.html', context)
 
 def show_detail(request, show_id):
     showinfo = Show.objects.get(pk=show_id)
