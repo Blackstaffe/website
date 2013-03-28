@@ -16,7 +16,13 @@ def genre(request):
     return render(request, 'archive/genres.html', context)
 
 def show_detail(request, show_id):
+    # make a list of last 10 episodes 
+    #CJSR_2013-03-25_23-00-00.mp3
     showinfo = Show.objects.get(pk=show_id)
+    # This should be a function of the module because building a string for
+    # the file name will be reused
+    timeslot = showinfo.timeslot.strftime('%H-%M')
+    print timeslot
     context = {'showinfo': showinfo}
     return render(request, 'archive/show_detail.html', context)
 
