@@ -13,6 +13,10 @@ urlpatterns = patterns('',
     url(r'^genres/$', 
     views.genre, 
     name='genres'),
+    # URL Scheme for timelookup form submit
+    url(r'^timelookup/$', 
+    views.timelookup, 
+    name='timelookup'),
 #    url(r^/genre/
      # maybe genre's should be referenced by an ID instead of a string would 
      # make this easier -   url(r'^genres/(?P<genre_id>\d+)/$', 
