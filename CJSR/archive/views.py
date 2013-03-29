@@ -5,19 +5,27 @@ from showmanager.models import Show, Host
 # Create your views here.
 # these should be moved into seperate files for sanities sake
 def index(request):
+    #Range for date form
     #Time Lookup code
     latestlogs = Show.objects.order_by('timeslot')[:12]
-    context = {'latestlogs': latestlogs}
+    context = {'latestlogs': latestlogs,
+    'daterange': range(1, 32),
+    'hourrange' : range(1, 25)}
     return render(request, 'archive/index.html', context, 
     context_instance=RequestContext(request)) 
 def timelookup(request):
-    timerequest = request.POST['time']
-    daterequest = request.POST['date']
+    # Write a function to add a leading zero to all of day, month and hour
+    # print "%02d" % (1,)
+    month = request.POST['month']
+    day = request.POST['day']
+    year = request.POST['year']
     #timeslot = showinfo.timeslot.strftime('%H-%M-%S')
     #startdate = showinfo.startdate.strftime('%Y-%M-%d')
     # this is almost working I just need to split up the forms and make them
     # better then constructing a file will be easier
-    logfile = '%s/CJSR_%s_%s.mp3' % (folder, daterequest, timerequest)
+    #CJSR_2013-03-25_23-00-00.mp3
+    logfile = '%s_%s/CJSR_%s-%s-%s_%s-00-00.mp3' % (
+    year, month, year, month, day, hour)
     print logfile
     # This should be a response redirect with an
     # added context  not a straight return render 
