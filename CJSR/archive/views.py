@@ -16,9 +16,10 @@ def index(request):
 def timelookup(request):
     # Write a function to add a leading zero to all of day, month and hour
     # print "%02d" % (1,)
-    month = request.POST['month']
-    day = request.POST['day']
-    year = request.POST['year']
+    month = "%02d" %(int(request.POST['month']),)
+    day = "%02d" % (int(request.POST['date']),)
+    year = "%02d" % (int(request.POST['year']),)
+    hour = "%02d" % (int(request.POST['hour']),)
     #timeslot = showinfo.timeslot.strftime('%H-%M-%S')
     #startdate = showinfo.startdate.strftime('%Y-%M-%d')
     # this is almost working I just need to split up the forms and make them
