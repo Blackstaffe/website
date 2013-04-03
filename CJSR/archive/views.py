@@ -2,44 +2,50 @@ from django.shortcuts import render
 from django.template import Context, loader
 from django.template import RequestContext
 from showmanager.models import Show, Host
+from datetime import datetime, timedelta
 # Create your views here.
 # these should be moved into seperate files for sanities sake
 def index(request):
-    #Range for date form
-    #Time Lookup code
-    latestlogs = Show.objects.order_by('timeslot')[:12]
-    context = {'latestlogs': latestlogs,
-    'daterange': range(1, 32),
-    'hourrange' : range(1, 25)}
-    return render(request, 'archive/index.html', context, 
-    context_instance=RequestContext(request)) 
+    latestlogs = []
+    hour = 1
+    for l in range(0,11):
+        logdatetime = datetime.now() - timedelta(hours=hour)
+        latestlogs.append(logdatetime.strftime('%Y_%m/CJSR_%Y-%m-%d_%H-00-00.mp3'))
+        hour += 1
+    context = {'latestlogs': latestlogs,}
+    return render(request, 'archive/index.html', context)
 def timelookup(request):
-    # Write a function to add a leading zero to all of day, month and hour
-    # print "%02d" % (1,)
-    month = "%02d" %(int(request.POST['month']),)
-    day = "%02d" % (int(request.POST['date']),)
-    year = "%02d" % (int(request.POST['year']),)
-    hour = "%02d" % (int(request.POST['hour']),)
-    #timeslot = showinfo.timeslot.strftime('%H-%M-%S')
-    #startdate = showinfo.startdate.strftime('%Y-%M-%d')
-    # this is almost working I just need to split up the forms and make them
-    # better then constructing a file will be easier
-    #CJSR_2013-03-25_23-00-00.mp3
-    logfile = '%s_%s/CJSR_%s-%s-%s_%s-00-00.mp3' % (
-    year, month, year, month, day, hour)
-    print logfile
-    # This should be a response redirect with an
-    # added context  not a straight return render 
-    context = {'logfile': logfile}
-    return render(request, 'archive/index.html', context) 
+    # Check if a request has been made
+    try:
+        request.POST['logrequest']
+    except (KeyError):
+        context = {
+        'daterange': range(1, 32),
+        'hourrange' : range(0, 24),}
+        return render(request, 'archive/timelookup.html', context)
+    else:
+        year = request.POST['year']
+        month = "%02d" %(int(request.POST['month']),)
+        day = "%02d" % (int(request.POST['date']),)
+        hour = "%02d" % (int(request.POST['hour']),)
+        logfile = '%s_%s/CJSR_%s-%s-%s_%s-00-00.mp3' % (
+        year, month, year, month, day, hour)
+        context = {'logfile' : logfile,
+        'daterange': range(1, 32),
+        # This should be a dictionary that references a list of numbers eg. '12am' : 0 
+        'hourrange' : range(0, 24),}
+        return render(request, 'archive/timelookup.html', context,
+    context_instance=RequestContext(request))
 
 # this is uneccesary kept here for memories sake
-def genre(request):
+def genre_detail(request):
     genrelist = Show.objects.order_by('genre')
     context = {'genrelist': genrelist}
-    return render(request, 'archive/genres.html', context)
+    return render(request, 'archive/genre_detail.html', context)
 
 def show_detail(request, show_id):
+    #timeslot = showinfo.timeslot.strftime('%H-%M-%S')
+    #startdate = showinfo.startdate.strftime('%Y-%M-%d')
     # make a list of last 10 episodes 
     #CJSR_2013-03-25_23-00-00.mp3
     showinfo = Show.objects.get(pk=show_id)
@@ -52,8 +58,8 @@ def show_detail(request, show_id):
     context = {'showinfo': showinfo}
     return render(request, 'archive/show_detail.html', context)
 
-# Change this to reference by absolute time value
 def shows(request):
+    # make a list and use a for loop this is ugly 
     sunday = Show.objects.filter(day__exact='Sunday')    
     monday = Show.objects.filter(day__exact='Monday')    
     tuesday = Show.objects.filter(day__exact='Tuesday')    

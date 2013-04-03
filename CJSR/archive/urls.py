@@ -10,9 +10,9 @@ urlpatterns = patterns('',
     views.show_detail, 
     name='show_detail'),
     # Url scheme for genre pages
-    url(r'^genres/$', 
-    views.genre, 
-    name='genres'),
+#    url(r'^genres/$', 
+#    views.genre, 
+#    name='genres'),
     # URL Scheme for timelookup form submit
     url(r'^timelookup/$', 
     views.timelookup, 
