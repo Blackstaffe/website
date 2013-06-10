@@ -1,4 +1,7 @@
-<h3>Time Lookup</h3>
+{% extends "archive/base.html" %}
+{% block title %}Timeslot Lookup{% endblock %}
+{% block pagename %}Timeslot Lookup{% endblock %}
+{% block content %}
 <form action="{% url archive:timelookup %}" method="post">
 <input type="hidden" name="logrequest" "value="True">
 {% csrf_token %}
@@ -38,4 +41,4 @@ Timeslot:
 <a href="ftp://129.128.76.120/{{ logfile }}">Download</a> Right Click: Save Target As
 {% endif %}
 </form>
-
+{% endblock %}

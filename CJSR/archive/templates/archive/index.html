@@ -1,13 +1,11 @@
-<h1>Latest Logs</h1>
+{% extends "archive/base.html" %}
+
+{% block title %}Home{% endblock %}
+{% block pagename %}Latest Logs{% endblock %}
+{% block content %}
 {% for l in latestlogs %}
 <ul>
 <li><a href="ftp://129.128.76.120/{{ l }}">{{ l }}</a></li>
 </ul>
 {% endfor %}
-
-<h1>Find By</h1>
-<ul>
-<li><a href="genres/">Genre (this might link to a like shows)</a></li>
-<li><a href="shows/">Shows</a></li>
-<li><a href="timelookup/">Time</a></li>
-</ul>
+{% endblock %}

@@ -1,65 +1,13 @@
+{% extends "archive/base.html" %}
+{% block title %}Shows{% endblock %}
+{% block pagename %}Shows{% endblock %}
+{% block content %}
+{% for day in weekdays %}
+{% for show in day %}
+<h2>weekday</h2>
 <ul>
-<h1>Sunday</h1>
-{% if sunday %}
-{% for show in sunday %}
-<li><a href="{{ show.id }}/">{{ show.name }}</a></li>
-{% endfor %}
-{% else %}
-No Shows Found
-{% endif %}
-
-<h1>Monday</h1>
-{% if monday %}
-{% for show in monday %}
-<li><a href="{{ show.id }}/">{{ show.name }}</a></li>
-{% endfor %}
-{% else %}
-No Shows Found
-{% endif %}
-
-<h1>Tuesday</h1>
-{% if tuesday %}
-{% for show in tuesday %}
-<li><a href="{{ show.id }}/">{{ show.name }}</a></li>
-{% endfor %}
-{% else %}
-No Shows Found
-{% endif %}
-
-<h1>Wednesday</h1>
-{% if wednesday %}
-{% for show in wednesday %}
-<li><a href="{{ show.id }}/">{{ show.name }}</a></li>
-{% endfor %}
-{% else %}
-No Shows Found
-{% endif %}
-
-<h1>Thursday</h1>
-{% if thursday %}
-{% for show in thursday %}
-<li><a href="{{ show.id }}/">{{ show.name }}</a></li>
-{% endfor %}
-{% else %}
-No Shows Found
-{% endif %}
-
-<h1>Friday</h1>
-{% if friday %}
-{% for show in friday %}
-<li><a href="{{ show.id }}/">{{ show.name }}</a></li>
-{% endfor %}
-{% else %}
-No Shows Found For Friday
-{% endif %}
-
-<h1>Saturday</h1>
-{% if saturday %}
-{% for show in saturday %}
-<li><a href="{{ show.id }}/">{{ show.name }}</a></li>
-{% endfor %}
-{% else %}
-No Shows Found For Saturday
-{% endif %}
+<li>{{ show }}</li>
 </ul>
-
+{% endfor %}
+{% endfor %}
+{% endblock %}

@@ -1,9 +1,14 @@
-{% if showsingenre %}
+{% extends "archive/base.html" %}
+{% block title %}Genres{% endblock %}
+{% block pagename %}Genres{% endblock %}
+{% block content %}
+{% if genrelist %}
     <ul>
-    {% for show in showsingenre %}
-        <li><a href="{{ show.name }}/">{{ show.name }}</a></li>
+    {% for genre in genrelist %}
+        <li><a href="{{ genre.genre }}/">{{ genre.genre }}</a></li>
     {% endfor %}
     </ul>
 {% else %}
     <p>No Shows Found</p>
 {% endif %}
+{% endblock %}
