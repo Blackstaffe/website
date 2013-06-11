@@ -1,16 +1,16 @@
 from django.shortcuts import render
 from django.template import Context, loader
 from django.template import RequestContext
-from showmanager.models import Show, Host
+from showmanager.models import Show, Host, Genre
 from datetime import datetime, timedelta
 # Create your views here.
-# these should be moved into seperate files for sanities sake
 def index(request):
     latestlogs = []
-    hour = 1
-    for l in range(0,11):
+    hour = 2
+    hourstoday = int(datetime.now().strftime('%H')) - 1
+    for i in range(0, hourstoday):
         logdatetime = datetime.now() - timedelta(hours=hour)
-        latestlogs.append(logdatetime.strftime('%Y_%m/CJSR_%Y-%m-%d_%H-00-00.mp3'))
+        latestlogs.append(logdatetime.strftime('%Y-%m/CJSR_%Y-%m-%d_%H-00-00.mp3'))
         hour += 1
     context = {'latestlogs': latestlogs,}
     return render(request, 'archive/index.html', context)
@@ -28,50 +28,57 @@ def timelookup(request):
         month = "%02d" %(int(request.POST['month']),)
         day = "%02d" % (int(request.POST['date']),)
         hour = "%02d" % (int(request.POST['hour']),)
-        logfile = '%s_%s/CJSR_%s-%s-%s_%s-00-00.mp3' % (
+        logfile = '%s-%s/CJSR_%s-%s-%s_%s-00-00.mp3' % (
         year, month, year, month, day, hour)
         context = {'logfile' : logfile,
         'daterange': range(1, 32),
         # This should be a dictionary that references a list of numbers eg. '12am' : 0 
         'hourrange' : range(0, 24),}
         return render(request, 'archive/timelookup.html', context,
-    context_instance=RequestContext(request))
+        context_instance=RequestContext(request))
 
-# this is uneccesary kept here for memories sake
-def genre_detail(request):
-    genrelist = Show.objects.order_by('genre')
+def genres(request):
+    genrelist = Genre.objects.all()
     context = {'genrelist': genrelist}
-    return render(request, 'archive/genre_detail.html', context)
+    return render(request, 'archive/genres.html', context)
 
 def show_detail(request, show_id):
-    #timeslot = showinfo.timeslot.strftime('%H-%M-%S')
-    #startdate = showinfo.startdate.strftime('%Y-%M-%d')
-    # make a list of last 10 episodes 
-    #CJSR_2013-03-25_23-00-00.mp3
     showinfo = Show.objects.get(pk=show_id)
-    # This should be a function of the module because building a string for
-    # the file name will be reused
-    timeslot = showinfo.timeslot.strftime('%H-%M-%S')
-    startdate = showinfo.startdate.strftime('%Y-%M-%d')
-    logfile = 'CJSR_%s_%s.mp3' % (startdate, timeslot) 
-    print logfile
-    context = {'showinfo': showinfo}
+    latestlogs = []
+    day = 0
+    database_date = showinfo.timeslot_startdate
+    print showinfo.timeslot_startdate
+    database_weekday = database_date.weekday()
+    loghour = database_date.hour
+    print loghour
+    now_date = datetime.now().replace(hour=loghour,
+        minute=0, second=0, microsecond=0)
+    now_weekday = now_date.weekday()
+    diffrence_of_weekday = database_weekday - now_weekday
+    if diffrence_of_weekday > 0:
+        diffrence_of_weekday -= 7
+        latest_show = now_date + timedelta(days=diffrence_of_weekday)
+    else:
+        latest_show = now_date + timedelta(days=diffrence_of_weekday)
+    
+    for i in range(0,9):
+        logdatetime = latest_show - timedelta(days=day)
+        print logdatetime
+        latestlogs.append(logdatetime.strftime('%Y-%m/CJSR_%Y-%m-%d_%H-00-00.mp3'))
+        day += 7
+    context = {'latestlogs': latestlogs,
+       'showinfo': showinfo}
     return render(request, 'archive/show_detail.html', context)
 
 def shows(request):
-    # make a list and use a for loop this is ugly 
-    sunday = Show.objects.filter(day__exact='Sunday')    
-    monday = Show.objects.filter(day__exact='Monday')    
-    tuesday = Show.objects.filter(day__exact='Tuesday')    
-    wednesday = Show.objects.filter(day__exact='Wednesday')    
-    thursday = Show.objects.filter(day__exact='Thursday')    
-    friday = Show.objects.filter(day__exact='Friday')    
-    saturday = Show.objects.filter(day__exact='Saturday')    
-    context = {'sunday': sunday,
-    'monday': monday,
-    'tuesday': tuesday,
-    'wednesday': wednesday,
-    'thursday': thursday,
-    'friday': friday,
-    'saturday': saturday,}
+    # Okay so this will nedd to be a dictionary to pass this usefully i can
+    # generate the days of the week using the python datetime function
+    weekday_names = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday',
+    'Friday', 'Saturday']
+    
+    weekdays = []
+    for i in range(0, 6):
+        weekdays.append(Show.objects.filter(timeslot_startdate__week_day=i+1))
+    print weekdays
+    context = {'weekdays' : weekdays, 'weekday_names' : weekday_names}
     return render(request, 'archive/shows.html', context)
