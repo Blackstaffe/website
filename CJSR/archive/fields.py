@@ -13,9 +13,9 @@ class JqSplitDateTimeField(fields.MultiValueField):
         be given compress method
         """
         all_fields = (
-            fields.Charfield(max_length=10),
-            fields.Charfield(max_length=2),
-            fields.Charfield(max_length=2),
+            fields.CharField(max_length=10),
+            fields.CharField(max_length=2),
+            fields.CharField(max_length=2),
             fields.ChoiceField(choices = [('AM','AM'), ('PM','PM')])
             )
         super(JqSplitDateTimeField, self).__init__(all_fields, *args, **kwargs)

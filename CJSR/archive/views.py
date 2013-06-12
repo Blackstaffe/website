@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.template import Context, loader
 from django.template import RequestContext
+from archive.forms import TimeLookupForm
 from showmanager.models import Show, Host, Genre
 from datetime import datetime, timedelta
 # Create your views here.
@@ -15,28 +16,18 @@ def index(request):
     context = {'latestlogs': latestlogs,}
     return render(request, 'archive/index.html', context)
 def timelookup(request):
-    # Check if a request has been made
-    try:
-        request.POST['logrequest']
-    except (KeyError):
-        context = {
-        'daterange': range(1, 32),
-        'hourrange' : range(0, 24),}
-        return render(request, 'archive/timelookup.html', context)
+    if request.method == 'POST':
+        form = TimeLookupForm(request.POST)
+        if form.is_valid():        
+            print form
+            return HttpResponseRedirect('/thanks/')
+    
     else:
-        year = request.POST['year']
-        month = "%02d" %(int(request.POST['month']),)
-        day = "%02d" % (int(request.POST['date']),)
-        hour = "%02d" % (int(request.POST['hour']),)
-        logfile = '%s-%s/CJSR_%s-%s-%s_%s-00-00.mp3' % (
-        year, month, year, month, day, hour)
-        context = {'logfile' : logfile,
-        'daterange': range(1, 32),
-        # This should be a dictionary that references a list of numbers eg. '12am' : 0 
-        'hourrange' : range(0, 24),}
-        return render(request, 'archive/timelookup.html', context,
-        context_instance=RequestContext(request))
-
+        form = TimeLookupForm()
+        print form.media
+    return render(request, 'archive/timelookup.html', {
+         'form': form,
+    })
 def genres(request):
     genrelist = Genre.objects.all()
     context = {'genrelist': genrelist}

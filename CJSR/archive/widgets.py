@@ -19,8 +19,8 @@ class JqSplitDateTimeWidget(MultiWidget):
 
         widgets = (DateInput (attrs=date_attrs, format=date_format),
                    TextInput (attrs=time_attrs), TextInput(attrs=time_attrs),
-                   Select (attrs=attrs, choices=[('AM','AM'),('PM','PM')])
-        super(JqSplitDateTimeWidget, se;f).__init__(widgets, attrs)
+                   Select (attrs=attrs, choices=[('AM','AM'),('PM','PM')]))
+        super(JqSplitDateTimeWidget, self).__init__(widgets, attrs)
 
     def decompress(self, value):
         if value:

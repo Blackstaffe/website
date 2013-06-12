@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<link type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="Stylesheet" /> 
+        <script src="http://code.jquery.com/jquery-1.9.1.js" type="text/javascript"></script> 
+        <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js" type="text/javascript"></script>
 	<link rel="stylesheet" href="style.css" />
 	<title>Archive - {% block title %}{% endblock %}</title>
 </head>
@@ -14,6 +17,7 @@
         </div>
 	<div id="title">
 		<h1>{% block pagename %}{% endblock %}</h1>
+	</div>
 	<div id="content">
 		{% block content %}{% endblock %}
 	</div>
